@@ -5,7 +5,7 @@ class Employee {
         this.lastName = lastName;
         this.idNumber = idNumber;
         this.jobTitle = jobTitle;
-        this.annualSalary = annualSalary;
+        this.annualSalary = parseInt(annualSalary);
     }
 }
 
@@ -16,7 +16,7 @@ class Payroll {
     addEmployee(employee) {
         this.employees.push(employee);
     }
-    display() {
+    displayEmployees() {
         let table = $('#employeeTable');
         table.empty();
         table.append('<thead><tr><th>First Name</th><th>Last Name</th>' 
@@ -25,18 +25,24 @@ class Payroll {
         let tbody = $('<tbody id="tableBody"></tbody>');
         table.append(tbody);
 
-        // $('#employeeDiv').append(table);
-        for (let employee of this.employees) {
+        for (let em of this.employees) {
             tbody.append(
                 `<tr>
-                    <td>${employee.firstName}</td>
-                    <td>${employee.lastName}</td>
-                    <td>${employee.idNumber}</td>
-                    <td>${employee.jobTitle}</td>
-                    <td>${employee.annualSalary}</td>
+                    <td>${em.firstName}</td>
+                    <td>${em.lastName}</td>
+                    <td>${em.idNumber}</td>
+                    <td>${em.jobTitle}</td>
+                    <td>${em.annualSalary}</td>
                 </tr>`
             );
         }
+    }
+    totalPayroll() {
+        let total = 0;
+        for (let em of this.employees) {
+            total += em.annualSalary;
+        }
+        return total;
     }
 }
 
@@ -58,7 +64,8 @@ function submitClicked() {
         )
     );
     clearInputs();
-    payroll.display();
+    payroll.displayEmployees();
+    console.log(payroll.totalPayroll());
 }
 
 function clearInputs() {
