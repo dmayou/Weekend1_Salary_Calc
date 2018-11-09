@@ -50,6 +50,11 @@ class Payroll {
         let el =$('#totalPayroll');
         el.empty();
         el.append(`Total Monthly: $${this.total}`);
+        if (this.total <= 20000) {
+            el.css('background-color', 'white');
+        } else {
+            el.css('background-color', 'red');
+        }
     }
 }
 
