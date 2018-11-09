@@ -1,11 +1,4 @@
 'use strict';
-
-$(document).ready( onReady );
-
-function onReady() {
-    $('#submitBtn').on('click', submitClicked);
-}
-
 class Employee {
     constructor(firstName, lastName, idNumber, jobTitle, annualSalary) {
         this.firstName = firstName;
@@ -16,9 +9,25 @@ class Employee {
     }
 }
 
+class Payroll {
+    constructor() {
+        this.employees = [];
+    }
+    addEmployee(employee) {
+        this.employees.push(employee);
+    }
+}
+
+$(document).ready( onReady );
+let payroll = new Payroll;
+
+function onReady() {
+    $('#submitBtn').on('click', submitClicked);
+}
+
 function submitClicked() {
     console.log('in submitClicked');
-    console.log(new Employee (
+    payroll.addEmployee(new Employee (
             $('#fnIn').val(),
             $('#lnIn').val(),
             $('#idIn').val(),
