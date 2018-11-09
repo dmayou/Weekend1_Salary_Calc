@@ -12,9 +12,11 @@ class Employee {
 class Payroll {
     constructor() {
         this.employees = [];
+        this.total = 0;
     }
     addEmployee(employee) {
         this.employees.push(employee);
+        this.total += employee.annualSalary;
     }
     displayEmployees() {
         let table = $('#employeeTable');
@@ -38,11 +40,16 @@ class Payroll {
         }
     }
     totalPayroll() {
-        let total = 0;
-        for (let em of this.employees) {
-            total += em.annualSalary;
-        }
-        return total;
+        // let total = 0;
+        // for (let em of this.employees) {
+        //     total += em.annualSalary;
+        // }
+        return this.total;
+    }
+    displayTotal() {
+        let el =$('#totalPayroll');
+        el.empty();
+        el.append(`Total Monthly: $${this.total}`);
     }
 }
 
@@ -66,6 +73,7 @@ function submitClicked() {
     clearInputs();
     payroll.displayEmployees();
     console.log(payroll.totalPayroll());
+    payroll.displayTotal();
 }
 
 function clearInputs() {
