@@ -35,5 +35,13 @@ function submitClicked() {
             $('#annSalaryIn').val()
         )
     );
+    clearInputs();
+}
 
+function clearInputs() {
+    $('#fnIn').val('');
+    $('#lnIn').val('');
+    $('#idIn').val('');
+    $('#jobTitleIn').val('');
+    $('#annSalaryIn').val('');    
 }
