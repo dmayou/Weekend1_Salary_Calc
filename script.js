@@ -28,7 +28,6 @@ class Payroll {
         );
         let tbody = $('<tbody id="tableBody"></tbody>');
         table.append(tbody);
-
         if (this.employees.length > 0) {
             for (let em of this.employees) {
                 let deleteBtn = 
@@ -82,7 +81,6 @@ class Payroll {
 
 // global variables
 let payroll = new Payroll();
-
 
 $(document).ready( function() {
      $('#submitBtn').on('click', submitClicked);
