@@ -31,19 +31,21 @@ class Payroll {
 
         if (this.employees.length > 0) {
             for (let em of this.employees) {
-                let deleteBtnId = `id${em.idNumber}`;
+                let deleteBtn = 
+                    $('<button/>')
+                        .text('delete')
+                        .addClass('btn btn-secondary btn-sm')
+                        .on('click', deleteBtnClicked)
+                        .data( {empId: em.idNumber }); // add 'id number' field to button
                 tbody.append(
-                    `<tr>
-                        <td>${em.firstName}</td>
+                    $('<tr></tr>').append(
+                        `<td>${em.firstName}</td>
                         <td>${em.lastName}</td>
                         <td>${em.idNumber}</td>
                         <td>${em.jobTitle}</td>
-                        <td>${new Intl.NumberFormat().format(em.annualSalary)}</td>
-                        <td><button class="btn btn-secondary btn-sm"
-                            id="${deleteBtnId}">delete</button></td>
-                    </tr>`
+                        <td>${new Intl.NumberFormat().format(em.annualSalary)}</td>`)
+                        .append($('<td></td>').append(deleteBtn))
                 );
-                $(`#${deleteBtnId}`).on('click', deleteBtnClicked);
             }
         } else {
             tbody.append('<tr><td>(no employees)</td></tr>');
@@ -67,8 +69,7 @@ class Payroll {
         }
     }
     deleteEmployee(id) {
-        console.log('in delete employee', this);
-        // find index of employee to delete and remove that element of array
+        // finds index of first employee with matching id and removes array element
         for (let i in this.employees) {
             if (this.employees[i].idNumber === id){ // found employee to delete
                 this.total -= this.employees[i].annualSalary; // deduct salary
@@ -113,9 +114,7 @@ function clearInputs() {
 }
 
 function deleteBtnClicked() {
-    // idNumber of employee to delete begins at index 2 of button id
-    const empId = this.id.slice(2);
-    payroll.deleteEmployee(empId);
+    payroll.deleteEmployee($(this).data().empId);
     payroll.displayEmployees();
     payroll.displayTotal();
 }
