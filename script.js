@@ -37,8 +37,9 @@ class Payroll {
                     <td>${em.lastName}</td>
                     <td>${em.idNumber}</td>
                     <td>${em.jobTitle}</td>
-                    <td>${em.annualSalary}</td>
-                    <td><button id="${deleteBtnId}">delete</button></td>
+                    <td>${new Intl.NumberFormat().format(em.annualSalary)}</td>
+                    <td><button class="btn btn-secondary btn-sm"
+                        id="${deleteBtnId}">delete</button></td>
                 </tr>`
             );
             $(`#${deleteBtnId}`).on('click', deleteBtnClicked);
@@ -50,9 +51,12 @@ class Payroll {
     displayTotal() {
         let el =$('#totalPayroll');
         el.empty();
-        const monthly = this.monthlyPayroll();
-        el.append(`Total Monthly: $${monthly}`);
-        if (monthly <= 20000) {
+        const monthlyStr = 
+            new Intl.NumberFormat(
+                'en-IN', { minimumFractionDigits: 2 }).format(this.monthlyPayroll()
+        );
+        el.append(`<h4 class="rt-just">Total Monthly: $${monthlyStr}</h4>`);
+        if (this.monthlyPayroll() <= 20000) {
             el.css('background-color', 'white');
         } else {
             el.css('background-color', 'red');

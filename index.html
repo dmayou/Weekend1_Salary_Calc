@@ -6,21 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="jquery-3.3.1.min.js"></script>
     <script src="script.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
     <title>Salary Calculator (Weekend Challenge 1)</title>
 </head>
-<body>
+<body class="container">
+    <h1 class="jumbotron">Salary Calculator</h1>
     <div id="inputDiv">
-        <h1>Add Employees</h1>
-        <input type="text" id="fnIn" placeholder="employee first name"/>
-        <input type="text" id="lnIn" placeholder="employee last name" />
-        <input type="text" id="idIn" placeholder="id number" />
-        <input type="text" id="jobTitleIn" placeholder="job title" />
-        <input type="text" id="annSalaryIn" placeholder="annual salary" />
-        <button id="submitBtn">Submit</button>
+        <h3>Add Employees</h3>
+        <input class="input" type="text" id="fnIn" placeholder="First Name"/>
+        <input class="input" type="text" id="lnIn" placeholder="Last Name" />
+        <input class="input" type="text" id="idIn" placeholder="ID" />
+        <input class="input" type="text" id="jobTitleIn" placeholder="Title" />
+        <input class="input" type="text" id="annSalaryIn" placeholder="Annual Salary" />
+        <button class="btn btn-primary" id="submitBtn">Submit</button>
     </div>
     <div id="employeeDiv">
-        <h1>Employees</h1>
-        <table id="employeeTable">
+        <h3>Employees</h3>
+        <table class="table table-striped" id="employeeTable">
         </table>
         <div id="totalPayroll"></div>
     </div>
