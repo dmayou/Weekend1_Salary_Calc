@@ -1,4 +1,6 @@
 'use strict';
+
+// Class definitions
 class Employee {
     constructor(firstName, lastName, idNumber, jobTitle, annualSalary) {
         this.firstName = firstName;
@@ -42,17 +44,13 @@ class Payroll {
             $(`#${deleteBtnId}`).on('click', deleteBtnClicked);
         }
     }
-    totalPayroll() {
-        // let total = 0;
-        // for (let em of this.employees) {
-        //     total += em.annualSalary;
-        // }
-        return this.total;
+    monthlyPayroll() {
+        return Math.round(this.total / 12);
     }
     displayTotal() {
         let el =$('#totalPayroll');
         el.empty();
-        const monthly = this.total / 12;
+        const monthly = this.monthlyPayroll();
         el.append(`Total Monthly: $${monthly}`);
         if (monthly <= 20000) {
             el.css('background-color', 'white');
@@ -64,25 +62,26 @@ class Payroll {
         console.log('in delete employee', this);
         // find index of employee to delete and remove that element of array
         for (let i in this.employees) {
-            if (this.employees[i].idNumber === id){
-                this.total -= this.employees[i].annualSalary;
+            if (this.employees[i].idNumber === id){ // found employee to delete
+                this.total -= this.employees[i].annualSalary; // deduct salary
                 this.employees.splice(i, 1);
                 break;
             }
         }
-        console.log(this.employees);
     }
 }
 
-$(document).ready( onReady );
+// global variables
 let payroll = new Payroll();
 
-function onReady() {
-    $('#submitBtn').on('click', submitClicked);
-}
 
+$(document).ready( function() {
+     $('#submitBtn').on('click', submitClicked); 
+    } 
+);
+
+// functions
 function submitClicked() {
-    console.log('in submitClicked');
     payroll.addEmployee(new Employee (
             $('#fnIn').val(),
             $('#lnIn').val(),
@@ -93,7 +92,6 @@ function submitClicked() {
     );
     clearInputs();
     payroll.displayEmployees();
-    console.log(payroll.totalPayroll());
     payroll.displayTotal();
 }
 
@@ -102,11 +100,11 @@ function clearInputs() {
     $('#lnIn').val('');
     $('#idIn').val('');
     $('#jobTitleIn').val('');
-    $('#annSalaryIn').val('');    
+    $('#annSalaryIn').val('');  
 }
 
 function deleteBtnClicked() {
-    // idNumber of employee to delete begins on 3rd char of button id
+    // idNumber of employee to delete begins at index 2 of button id
     const empId = this.id.slice(2);
     payroll.deleteEmployee(empId);
     payroll.displayEmployees();
