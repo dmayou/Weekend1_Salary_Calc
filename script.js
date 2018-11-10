@@ -29,20 +29,24 @@ class Payroll {
         let tbody = $('<tbody id="tableBody"></tbody>');
         table.append(tbody);
 
-        for (let em of this.employees) {
-            let deleteBtnId = `id${em.idNumber}`;
-            tbody.append(
-                `<tr>
-                    <td>${em.firstName}</td>
-                    <td>${em.lastName}</td>
-                    <td>${em.idNumber}</td>
-                    <td>${em.jobTitle}</td>
-                    <td>${new Intl.NumberFormat().format(em.annualSalary)}</td>
-                    <td><button class="btn btn-secondary btn-sm"
-                        id="${deleteBtnId}">delete</button></td>
-                </tr>`
-            );
-            $(`#${deleteBtnId}`).on('click', deleteBtnClicked);
+        if (this.employees.length > 0) {
+            for (let em of this.employees) {
+                let deleteBtnId = `id${em.idNumber}`;
+                tbody.append(
+                    `<tr>
+                        <td>${em.firstName}</td>
+                        <td>${em.lastName}</td>
+                        <td>${em.idNumber}</td>
+                        <td>${em.jobTitle}</td>
+                        <td>${new Intl.NumberFormat().format(em.annualSalary)}</td>
+                        <td><button class="btn btn-secondary btn-sm"
+                            id="${deleteBtnId}">delete</button></td>
+                    </tr>`
+                );
+                $(`#${deleteBtnId}`).on('click', deleteBtnClicked);
+            }
+        } else {
+            tbody.append('<tr><td>(no employees)</td></tr>');
         }
     }
     monthlyPayroll() {
@@ -80,7 +84,8 @@ let payroll = new Payroll();
 
 
 $(document).ready( function() {
-     $('#submitBtn').on('click', submitClicked); 
+     $('#submitBtn').on('click', submitClicked);
+     payroll.displayEmployees(); // initially will put up 'no employees' row
     } 
 );
 
