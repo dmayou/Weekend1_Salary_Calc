@@ -28,6 +28,7 @@ class Payroll {
         table.append(tbody);
 
         for (let em of this.employees) {
+            let deleteBtnId = `id${em.idNumber}`;
             tbody.append(
                 `<tr>
                     <td>${em.firstName}</td>
@@ -35,8 +36,10 @@ class Payroll {
                     <td>${em.idNumber}</td>
                     <td>${em.jobTitle}</td>
                     <td>${em.annualSalary}</td>
+                    <td><button id="${deleteBtnId}">delete</button></td>
                 </tr>`
             );
+            $(`#${deleteBtnId}`).on('click', deleteBtnClicked);
         }
     }
     totalPayroll() {
@@ -49,12 +52,25 @@ class Payroll {
     displayTotal() {
         let el =$('#totalPayroll');
         el.empty();
-        el.append(`Total Monthly: $${this.total}`);
-        if (this.total <= 20000) {
+        const monthly = this.total / 12;
+        el.append(`Total Monthly: $${monthly}`);
+        if (monthly <= 20000) {
             el.css('background-color', 'white');
         } else {
             el.css('background-color', 'red');
         }
+    }
+    deleteEmployee(id) {
+        console.log('in delete employee', this);
+        // find index of employee to delete and remove that element of array
+        for (let i in this.employees) {
+            if (this.employees[i].idNumber === id){
+                this.total -= this.employees[i].annualSalary;
+                this.employees.splice(i, 1);
+                break;
+            }
+        }
+        console.log(this.employees);
     }
 }
 
@@ -87,4 +103,12 @@ function clearInputs() {
     $('#idIn').val('');
     $('#jobTitleIn').val('');
     $('#annSalaryIn').val('');    
+}
+
+function deleteBtnClicked() {
+    // idNumber of employee to delete begins on 3rd char of button id
+    const empId = this.id.slice(2);
+    payroll.deleteEmployee(empId);
+    payroll.displayEmployees();
+    payroll.displayTotal();
 }
