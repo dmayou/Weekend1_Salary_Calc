@@ -37,13 +37,15 @@ class Payroll {
                         .on('click', deleteBtnClicked)
                         .data( {empId: em.idNumber }); // add 'id number' field to button
                 tbody.append(
-                    $('<tr></tr>').append(
-                        `<td>${em.firstName}</td>
-                        <td>${em.lastName}</td>
-                        <td>${em.idNumber}</td>
-                        <td>${em.jobTitle}</td>
-                        <td>${new Intl.NumberFormat().format(em.annualSalary)}</td>`)
-                        .append($('<td></td>').append(deleteBtn))
+                    $('<tr></tr>')
+                        .append(
+                            `<td>${em.firstName}</td>
+                            <td>${em.lastName}</td>
+                            <td>${em.idNumber}</td>
+                            <td>${em.jobTitle}</td>
+                            <td>${new Intl.NumberFormat().format(em.annualSalary)}</td>`)
+                        .append($('<td></td>')
+                        .append(deleteBtn))
                 );
             }
         } else {
